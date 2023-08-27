@@ -1,0 +1,70 @@
+{
+  "interactionModel": {
+    "dialog": {
+      "intents": [
+        {
+          "slots": [
+            {
+              "name": "Data",
+              "elicitationRequired": true,
+              "type": "AMAZON.DayOfWeek",
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.309309637330.1034347141656"
+              }
+            }
+          ],
+          "name": "HelloWorldIntent",
+          "confirmationRequired": false,
+          "prompts": {}
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "languageModel": {
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "slots": [
+            {
+              "name": "Data",
+              "type": "AMAZON.DayOfWeek"
+            }
+          ],
+          "name": "HelloWorldIntent",
+          "samples": [
+            "Cosa si getta {Data}"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": [],
+      "invocationName": "raccolta differenziata pagani"
+    },
+    "prompts": [
+      {
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Indicami un giorno correttamente"
+          }
+        ],
+        "id": "Elicit.Slot.309309637330.1034347141656"
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+[
+    {
+        "id":"0",
+        "giorno":"Lunedì",
+        "tipoRifiuto":[0,2,4]
+    },
+    {
+        "id":"1",
+        "giorno":"Martedì",
+        "tipoRifiuto":[0,1,4]
+    },
+    {
+        "id":"2",
+        "giorno":"Mercoledì",
+        "tipoRifiuto":[0,2,4]
+    },    
+    {
+        "id":"3",
+        "giorno":"Giovedì",
+        "tipoRifiuto":[0,3,4]
+    },
+    {
+        "id":"4",
+        "giorno":"Venerdì",
+        "tipoRifiuto":[0,1,4]
+    },
+    {
+        "id":"5",
+        "giorno":"Sabato",
+        "tipoRifiuto":[4]
+    },
+    {
+        "id":"6",
+        "giorno":"Domenica",
+        "tipoRifiuto":[3,4]
+    }
+]

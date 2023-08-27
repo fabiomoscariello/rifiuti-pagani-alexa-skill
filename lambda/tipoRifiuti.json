@@ -1,0 +1,22 @@
+[
+    {
+        "id":0,
+        "nome":"Umido"
+    },
+    {
+        "id":1,
+        "nome":"Multimateriale"
+    },
+    {
+        "id":2,
+        "nome":"Carta e Cartone"
+    },
+    {
+        "id":3,
+        "nome":"Indifferenziato"
+    },
+    {
+        "id":4,
+        "nome":"Vetro"
+    }
+]
