@@ -25,6 +25,16 @@
             }
         });
 }
+  static getCalendarioRifiutiFromTipiRifiutiParsed(calendarioRifiuti, tipologieRifiuti){
+  const calendarioFromTipiRifiuti = tipologieRifiuti.map((rifiuto)=>{
+      const giorni = calendarioRifiuti.filter((giornoRifiuto) => giornoRifiuto.tipoRifiuti.includes(rifiuto.nome)).map((x)=> x.giorno);
+      return {
+          "rifiuto":rifiuto.nome,
+          "giorni": giorni
+      }
+      });
+  return calendarioFromTipiRifiuti;
+}
 }
 module.exports = ParsingUtilClass;
 

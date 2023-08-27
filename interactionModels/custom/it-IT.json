@@ -7,14 +7,15 @@
             {
               "name": "Data",
               "elicitationRequired": true,
-              "type": "AMAZON.DayOfWeek",
+              "type": "AMAZON.DATE",
               "confirmationRequired": false,
               "prompts": {
-                "elicitation": "Elicit.Slot.309309637330.1034347141656"
+                "elicitation": "Elicit.Slot.348857863505.1204920345665"
               }
             }
           ],
-          "name": "HelloWorldIntent",
+          "name": "RispostaGiornoRifiutiIntent",
+          "delegationStrategy": "ALWAYS",
           "confirmationRequired": false,
           "prompts": {}
         }
@@ -39,20 +40,77 @@
           "slots": [
             {
               "name": "Data",
-              "type": "AMAZON.DayOfWeek"
+              "type": "AMAZON.DATE"
             }
           ],
-          "name": "HelloWorldIntent",
+          "name": "RispostaGiornoRifiutiIntent",
           "samples": [
+            "Cosa si butta {Data}",
+            "Cosa si conferisce {Data}",
             "Cosa si getta {Data}"
           ]
         },
         {
           "name": "AMAZON.NavigateHomeIntent",
           "samples": []
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
+        },
+        {
+          "slots": [
+            {
+              "name": "TipoRifiuti",
+              "type": "TipoRifiuti"
+            }
+          ],
+          "name": "TipoRifiutiGiornoIntent",
+          "samples": [
+            "Quando si conferisce {TipoRifiuti}",
+            "Quando si butta {TipoRifiuti}",
+            "Quando si getta {TipoRifiuti}"
+          ]
         }
       ],
-      "types": [],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "Vetro"
+              }
+            },
+            {
+              "name": {
+                "value": "Indifferenziato"
+              }
+            },
+            {
+              "name": {
+                "value": "Multimateriale"
+              }
+            },
+            {
+              "name": {
+                "synonyms": [
+                  "carta"
+                ],
+                "value": "Carta e Cartone"
+              }
+            },
+            {
+              "name": {
+                "synonyms": [
+                  "organico"
+                ],
+                "value": "Umido"
+              }
+            }
+          ],
+          "name": "TipoRifiuti"
+        }
+      ],
       "invocationName": "raccolta differenziata pagani"
     },
     "prompts": [
@@ -60,10 +118,10 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Indicami un giorno correttamente"
+            "value": "Indicami un giorno"
           }
         ],
-        "id": "Elicit.Slot.309309637330.1034347141656"
+        "id": "Elicit.Slot.348857863505.1204920345665"
       }
     ]
   }

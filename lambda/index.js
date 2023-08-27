@@ -18,7 +18,7 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         try{
         calendarioRaccoltaDifferenziata = new calendarioRifiutiClass(tipoRifiutiJson,calendarioRifiutiJson);
-        const speakOutput = 'Benvenuto in Raccolta Rifiuti Pagani!. Prova a dire cosa si getta oggi?';
+        const speakOutput = `Benvenuto in Raccolta Differenziata Pagani!. Per conoscere tutte le funzionalità dici Aiuto`;
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
@@ -29,10 +29,10 @@ const LaunchRequestHandler = {
     }
 };
 
-const HelloWorldIntentHandler = {
+const RispostaGiornoRifiutiIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'RispostaGiornoRifiutiIntent';
     },
     handle(handlerInput) {
         try{
@@ -44,14 +44,37 @@ const HelloWorldIntentHandler = {
         const rifiuti = calendarioRaccoltaRifiuti.find((giornoRaccolta) => {
             return giornoRaccolta.giorno.toLowerCase() === giorno
         }).tipoRifiuti;
-        const speakOutput = `${capitalizeFirstLetter(giorno)} si getta ${rifiuti.toString()}.`;
+        const speakOutput = `${capitalizeFirstLetter(giorno)} si conferisce ${rifiuti.toString()}.`;
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(repromptText)
             .getResponse();
         }catch(error){
-            console.log('HelloWorldIntentHandler error', error);
+            console.log('RispostaGiornoRifiutiIntentHandler error', error);
+        }
+    }
+};
+
+const TipoRifiutiGiornoIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'TipoRifiutiGiornoIntent';
+    },
+    handle(handlerInput) {
+        try{
+        const repromptText = 'Vuoi chiedermi qualche altra tipologia di rifiuto?';
+        const tipoRifiutiReceived = handlerInput.requestEnvelope.request.intent.slots.TipoRifiuti.value;
+        const calendarioRaccoltaRifiuti = calendarioRaccoltaDifferenziata.getCalendarioRifiutiFromTipiRifiuti();
+        const reply = calendarioRaccoltaRifiuti.find((tipoGiorni) => tipoGiorni.rifiuto.toLowerCase() === tipoRifiutiReceived).giorni;
+        const speakOutput = `${capitalizeFirstLetter(tipoRifiutiReceived)} si conferisce ${reply.toString()}.`;
+        
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptText)
+            .getResponse();
+        }catch(error){
+            console.log('RispostaGiornoRifiutiIntentHandler error', error);
         }
     }
 };
@@ -62,7 +85,7 @@ const HelpIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'You can say hello to me! How can I help?';
+        const speakOutput = 'Puoi provare a dire cosa si getta stasera oppure quando si getta un tipo di rifiuto?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -78,7 +101,7 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+        const speakOutput = 'Ok,alla prossima!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -96,7 +119,7 @@ const FallbackIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+        const speakOutput = 'Mi dispiace, non ho capito bene! Prova a riformulare la frase';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -130,7 +153,7 @@ const IntentReflectorHandler = {
     },
     handle(handlerInput) {
         const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
-        const speakOutput = `You just triggered ${intentName}`;
+        const speakOutput = `Hai lanciato ${intentName}`;
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -148,7 +171,7 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
+        const speakOutput = 'Spiacente, Ho riscontrato un problema con ciò che mi hai chiesto. Riprova.';
         console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
 
         return handlerInput.responseBuilder
@@ -168,7 +191,8 @@ function capitalizeFirstLetter(string) {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
+        RispostaGiornoRifiutiIntentHandler,
+        TipoRifiutiGiornoIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         FallbackIntentHandler,
